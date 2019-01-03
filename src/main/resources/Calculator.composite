@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<composite xmlns="http://docs.oasis-open.org/ns/opencsa/sca/200912"
+           name="CalculatorServiceComponent"
+           xmlns:tuscany="http://tuscany.apache.org/xmlns/sca/1.1"
+           targetNamespace="http://com.jnshu.task9">
+    <!--  计算机构件的名字-->
+    <component name="CalculatorServiceComponent">
+        <!--<implementation.java class="com.ajun.tuscany.server.Calculator" />设置实现类，采用了java的实现方式，
+        对应的实现类为：com.task.serviceImpl.CalculatorServiceImpl-->
+        <implementation.java class="com.task.serviceImpl.CalculatorServiceImpl"/>
+        <!--引用其他组件 其中addService必须和Calculator的set方法对应。-->
+        <reference name="addService" target="AddComponent"/>
+        <reference name="divideService" target="DivideComponent"/>
+        <reference name="multiplyService" target="MultiplyComponent"/>
+        <reference name="subtractService" target="SubtractComponent"/>
+       <service name="CalculatorServiceImpl">
+           <interface.java interface="com.task.service.CalculatorService"/>
+           <tuscany:binding.rmi uri="rmi://127.0.0.1:8099/CalculatorRMIService"/>
+       </service>
+    </component>
+    <component name="AddComponent">
+        <implementation.java class="com.task.serviceImpl.AddServiceImpl"/>
+    </component>
+
+    <component name="DivideComponent">
+        <implementation.java class="com.task.serviceImpl.DivideServiceImpl"/>
+    </component>
+
+    <component name="MultiplyComponent">
+        <implementation.java class="com.task.serviceImpl.MultiplyServiceImpl"/>
+    </component>
+
+    <component name="SubtractComponent">
+        <implementation.java class="com.task.serviceImpl.SubtractServiceImpl"/>
+    </component>
+</composite>
